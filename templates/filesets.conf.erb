@@ -1,0 +1,23 @@
+FileSet {
+  Name = "<%= name -%>" 
+
+  Include {
+    Options {
+    <% options.each do |option| -%>
+    <%= option %>
+    <% end -%>
+    }
+    <% files.each do |file| -%>
+ File = <%= file %>
+    <% end -%>
+ }
+
+    Exclude {
+    <% excludes.each do |exclude| -%>
+      File = <%= exclude %>
+    <% end -%>
+    } 
+  
+}
+
+

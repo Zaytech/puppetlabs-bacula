@@ -1,15 +1,16 @@
 # Classe para setar arquivos filesets
-define bacula::director::client (
+define bacula::director::pool (
    $name = '',
-   $address = '',
-   $password = '',
-   $fdport = '9102',
-   $fileretention = '30 days',
-   $jobretention = '6 months',
+   $type = 'Backup',
+   $recycle = 'yes',
    $autoprune = 'yes',
+   $volumeretention = '30 days',
+   $maximumvolumebytes = '60G',
+   $maximumvolumes = '10',
+   $labelformat = 'VL',
 
-   $template = 'bacula/clients.conf.erb',
-   $file = "/etc/bacula/bacula-dir.d/client_${name}.conf",
+   $template = 'bacula/pools.conf.erb',
+   $file = "/etc/bacula/bacula-dir.d/pool_${name}.conf",
 
    $db_backend = $bacula::db_backend,
    $dir_server = $bacula::director_server,
@@ -39,4 +40,5 @@ define bacula::director::client (
        require => Package[$db_package],
        notify  => Service['bacula-director'],
        }
-  }
+
+}

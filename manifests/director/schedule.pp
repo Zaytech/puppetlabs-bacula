@@ -1,15 +1,10 @@
 # Classe para setar arquivos filesets
-define bacula::director::client (
+define bacula::director::schedule (
    $name = '',
-   $address = '',
-   $password = '',
-   $fdport = '9102',
-   $fileretention = '30 days',
-   $jobretention = '6 months',
-   $autoprune = 'yes',
+   $runs = '',
 
-   $template = 'bacula/clients.conf.erb',
-   $file = "/etc/bacula/bacula-dir.d/client_${name}.conf",
+   $template = 'bacula/schedules.conf.erb',
+   $file = "/etc/bacula/bacula-dir.d/schedule_${name}.conf",
 
    $db_backend = $bacula::db_backend,
    $dir_server = $bacula::director_server,
@@ -39,4 +34,5 @@ define bacula::director::client (
        require => Package[$db_package],
        notify  => Service['bacula-director'],
        }
-  }
+
+}

@@ -1,15 +1,24 @@
-# Classe para setar arquivos filesets
-define bacula::director::client (
-   $name = '',
-   $address = '',
-   $password = '',
-   $fdport = '9102',
-   $fileretention = '30 days',
-   $jobretention = '6 months',
-   $autoprune = 'yes',
+# Classe para inserir jobsdefs nas configuracoes
+define bacula::director::jobdef (
+   $name     = '',
+   $type = 'Backup',
+   $level = 'Full',
+   $priority = '10',
+   $pool = 'File',
+   $poolfull = '',
+   $poolinc = '',
+#   $pooldef = '',
+   $storage = 'tclient2:storage',
+   $schedule_jobdef = '',
 
-   $template = 'bacula/clients.conf.erb',
-   $file = "/etc/bacula/bacula-dir.d/client_${name}.conf",
+   $client = '',
+   $fileset = '',
+
+   $messages = 'tclient2:messages:daemon',
+   $writebootstrap = '/var/lib/bacula/%c.bsr',
+
+   $template = 'bacula/jobdefs.conf.erb',
+   $file = "/etc/bacula/bacula-dir.d/jobdef_${name}.conf",
 
    $db_backend = $bacula::db_backend,
    $dir_server = $bacula::director_server,
@@ -26,7 +35,7 @@ define bacula::director::client (
      }
 
      $db_service = $bacula::config::director_service
-     
+
      #var for this #class 
      $catalog = "${dir_name}:${db_backend}"
 
@@ -39,4 +48,5 @@ define bacula::director::client (
        require => Package[$db_package],
        notify  => Service['bacula-director'],
        }
-  }
+
+}

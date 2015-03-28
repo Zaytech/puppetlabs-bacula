@@ -2,11 +2,11 @@
 define bacula::director::fileset (
    $name = '',
    $options = [ 'signature = MD5', 'compression = GZIP' ],
-   $files = '',
-   $excludes = '',
+   $files = ['/home', '/root', '/etc'],
+   $excludes = ['/proc', '/tmp', '/.journal', '/.jsck'],
    $db_backend = $bacula::db_backend,  
    $template = 'bacula/filesets.conf.erb',
-   $file = "/etc/bacula/bacula-dir.d/3_filesets_${name}.conf" ) 
+   $file = "/etc/bacula/bacula-dir.d/filesets_${name}.conf" ) 
 
    {
 

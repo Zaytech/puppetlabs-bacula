@@ -1,5 +1,5 @@
 # Classe para setar arquivos filesets
-class bacula::director::storage (
+define bacula::director::storage (
    $name = '',
    $address = '',
    $device = '',
@@ -7,12 +7,13 @@ class bacula::director::storage (
    $sdport = '9103',
 
    $template = 'bacula/storages.conf.erb',
-   $file = "/etc/bacula/bacula-dir.d/5_storage_${name}.conf",
+   $file = "/etc/bacula/bacula-dir.d/storage_${name}.conf",
 
    $db_backend = $bacula::db_backend,
    $dir_server = $bacula::director_server,
    $dir_password = $bacula::director_password,
    ) {
+
      # var commons for bacula complement
      $x = split($dir_server, '[.]')
      $dir_name = $x[0]
@@ -24,7 +25,7 @@ class bacula::director::storage (
 
      $db_service = $bacula::config::director_service
      
-     #var for this class 
+     #var for this #class 
      $catalog = "${dir_name}:${db_backend}"
 
      #
@@ -34,6 +35,7 @@ class bacula::director::storage (
        group   => 'bacula',
        content => template($template),
        require => Package[$db_package],
-       notify  => Service[$db_service],
+       notify  => Service['bacula-director'],
        }
-  }
+
+}

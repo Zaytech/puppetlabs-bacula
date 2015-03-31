@@ -156,6 +156,7 @@ class bacula(
   }
 
   class { 'bacula::common':
+    manage_db        => $manage_db,
     manage_db_tables => $manage_db_tables,
     db_backend       => $db_backend,
     db_user          => $db_user,

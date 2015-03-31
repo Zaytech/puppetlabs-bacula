@@ -43,7 +43,7 @@ class bacula::common(
       refreshonly => true,
     }
   }
-  
+  notify {"Aqui: $manage_db" :}
   if $manage_db {
     case $db_backend {
       'mysql': {
@@ -55,12 +55,10 @@ class bacula::common(
             true  => Exec['make_db_tables'],
             false => undef,
           },
-          require  => defined(Class['mysql::server']) ? {
-            true  => Class['mysql::server'],
-            false => undef,
-          },
+          require  => Service["mysql"]
         }
       }
+
       'sqlite': {
         sqlite::db { $db_database:
           location => "/var/lib/bacula/${db_database}.db",
